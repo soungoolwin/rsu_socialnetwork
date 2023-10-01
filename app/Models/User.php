@@ -42,4 +42,22 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // Define the relationship between User and Post (One-to-Many)
+    public function posts()
+    {
+        return $this->hasMany(Post::class, 'user_id', 'id');
+    }
+
+    // Define the relationship between User and Like (One-to-Many)
+    public function likes()
+    {
+        return $this->hasMany(Like::class, 'user_id', 'id');
+    }
+
+    // Define the relationship between User and Comment (One-to-Many)
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'user_id', 'id');
+    }
 }
