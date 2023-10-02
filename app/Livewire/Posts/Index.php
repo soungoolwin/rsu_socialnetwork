@@ -15,4 +15,8 @@ class Index extends Component
             'posts' => $this->posts
         ]);
     }
+    public function updateFeed()
+    {
+        $this->posts = Post::inRandomOrder()->get();
+    }
 }
