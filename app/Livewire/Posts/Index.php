@@ -2,21 +2,21 @@
 
 namespace App\Livewire\Posts;
 
-use App\Models\Post;
+use App\Models\User;
 use Livewire\Component;
 
 class Index extends Component
 {
-    public $posts;
+    public $users;
     public function render()
     {
-        $this->posts = Post::inRandomOrder()->get();
+        $this->users = User::inRandomOrder()->with('posts')->get();
         return view('livewire.posts.index', [
-            'posts' => $this->posts
+            'users' => $this->users
         ]);
     }
     public function updateFeed()
     {
-        $this->posts = Post::inRandomOrder()->get();
+        $this->users = User::inRandomOrder()->get();
     }
 }
