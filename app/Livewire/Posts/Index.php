@@ -2,21 +2,24 @@
 
 namespace App\Livewire\Posts;
 
+use App\Models\Post;
 use App\Models\User;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Index extends Component
 {
-    public $users;
+    public $posts;
+
     public function render()
     {
-        $this->users = User::inRandomOrder()->with('posts')->get();
+        $this->posts = Post::inRandomOrder()->with('user')->limit(10)->get();
         return view('livewire.posts.index', [
-            'users' => $this->users
+            'posts' => $this->posts
         ]);
     }
     public function updateFeed()
     {
-        $this->users = User::inRandomOrder()->get();
+        $this->posts = Post::inRandomOrder()->with('user')->limit(10)->get();
     }
 }
