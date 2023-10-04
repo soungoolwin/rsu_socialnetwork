@@ -3,23 +3,26 @@
 namespace App\Livewire\Posts;
 
 use App\Models\Post;
-use App\Models\User;
 use Livewire\Component;
-use Livewire\WithPagination;
+
 
 class Index extends Component
 {
-    public $posts;
+    public $perPage;
+    public $page;
+
+    public function mount($page = null, $perPage = null)
+    {
+        $this->page = $page ?? 1;
+        $this->perPage = $perPage ?? 10;
+    }
 
     public function render()
     {
-        $this->posts = Post::inRandomOrder()->with('user')->limit(10)->get();
+        $products = Post::with('user')->paginate($this->perPage, ['*'], null, $this->page);
+
         return view('livewire.posts.index', [
-            'posts' => $this->posts
+            'posts' => $products
         ]);
-    }
-    public function updateFeed()
-    {
-        $this->posts = Post::inRandomOrder()->with('user')->limit(10)->get();
     }
 }
